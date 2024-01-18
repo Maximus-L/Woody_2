@@ -9,6 +9,7 @@ import BotWoody.const as const
 router = Router()
 
 
+# Список команд для администратора
 @router.message(Command(commands=['help']),
                 F.from_user.id.in_(const.BOT_ADMINS))
 async def cmd_help_answer_adm(message: Message):
@@ -18,6 +19,7 @@ async def cmd_help_answer_adm(message: Message):
         await message.answer(cmd_help)
 
 
+# Список команд для пользователя
 @router.message(Command(commands=['help']),
                 F.from_user.id.in_(const.BOT_USERS))
 async def cmd_help_answer_user1(message: Message):
@@ -27,6 +29,7 @@ async def cmd_help_answer_user1(message: Message):
         await message.answer(cmd_help)
 
 
+# Список команд для оператора
 @router.message(Command(commands=['help']),
                 F.from_user.id.in_(const.BOT_OPERATORS))
 async def cmd_help_answer_operator1(message: Message):
@@ -36,8 +39,8 @@ async def cmd_help_answer_operator1(message: Message):
         await message.answer(cmd_help)
 
 
-@router.message(Command(commands=['help']),
-                )
+# Список команд для "остальных"
+@router.message(Command(commands=['help']))
 async def cmd_help_answer_other(message: Message):
     await message.answer(text="Доступные команды:",
                          reply_markup=ReplyKeyboardRemove())
@@ -45,8 +48,8 @@ async def cmd_help_answer_other(message: Message):
     await message.answer(text="/id - id пользователя")
 
 
-@router.message(Command(commands=['id']),
-                )
+# Отображение ID пользователя
+@router.message(Command(commands=['id']))
 async def cmd_help_answer_other(message: Message):
     user_id = message.from_user.id
     await message.answer(text=f"Ваш ID: {user_id}",

@@ -122,6 +122,7 @@ class DLStore(object):
             Lib.Files.zip_file(csv_name, zip_name)
         else:
             log.info(f'Not archived: {csv_name}')
+        return csv_name
 
     def extract_arc(self, date: dt.date = None):
         if date is not None and date in self.archive_store_list.keys():

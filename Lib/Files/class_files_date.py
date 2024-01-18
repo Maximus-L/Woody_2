@@ -11,7 +11,7 @@ import Lib
 log: Lib.AppLogger = Lib.AppLogger('Class FileStore',
                                    output='BOTH',
                                    log_file='./LOGS/scaner.log',
-                                   log_level=Lib.ERROR)
+                                   log_level=Lib.DEBUG)
 
 
 class InvalidFilePath(Exception):
@@ -59,20 +59,26 @@ class FilesStore(object):
         Обновление информации о файлах в хранилище
         :return:
         """
-        refreshed = False
-        current_dates = self.file_list.keys()
-        self.file_list.clear()
+        new_date_found = False
+        dates = []
         for rootkit, subdir, filenames in os.walk(self.__full_path):
             for filename in fnmatch.filter(filenames, self.__file_mask):
                 s_date = re.search(self.__date_mask, filename)
                 if s_date is not None:
                     d1 = dt.datetime.strptime(s_date.group(0), self.__date_format)
                     date = dt.date(d1.year, d1.month, 1)
-                    self.file_list[date] = filename
-                    if date not in current_dates:
-                        refreshed = True
+                    dates.append(date)
+                    if date not in self.file_list.keys():
+                        self.file_list[date] = filename
+                        new_date_found = True
                         log.debug(f'Новая дата:{date}')
-        return refreshed
+        if dates:
+            deleted_dates = self.file_list.keys() - dates
+            if deleted_dates:
+                for date_to_delete in deleted_dates:
+                    log.debug(f'Был удален файл: {self.file_list[date_to_delete]}')
+                    self.file_list.pop(date_to_delete)
+        return new_date_found
 
     @property  # Путь по которому хранятся файлы
     def store_path(self):

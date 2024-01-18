@@ -17,6 +17,7 @@ import BotWoody.const as const
 router = Router()
 
 
+# Обработка команды /get
 @router.message(Command(commands=['get']),
                 F.from_user.id.in_(const.BOT_OPERATORS))
 @router.message(Command(commands=['get']),
@@ -26,14 +27,16 @@ async def cmd_get_answer(message: Message, state: FSMContext):
     for name in Scaner.DATA_SOURCE.keys():
         keys.append([Scaner.DATA_SOURCE[name]['description'], name])
     await message.answer(text="Выберите источник:",
-                         reply_markup=BotWoody.inline_keyboard_cb_data(keys))
+                         reply_markup=BotWoody.inline_keyboard_cb_data(keys, size=2, pict=1))
     # установка состояния в ожидание выбора источника
     await state.set_state(BotWoody.WoodyStates.state_cmd_get)
 
 
+# Выбор источника данных
 @router.callback_query(BotWoody.WoodyStates.state_cmd_get,
                        F.data.in_(Scaner.DATA_SOURCE.keys()))
 async def cmd_get_choice_src(callback: CallbackQuery, state: FSMContext):
+    # Извлечение имени источника
     name = callback.data
     await callback.message.delete()
     await state.update_data(chosen_source=name)
@@ -46,14 +49,16 @@ async def cmd_get_choice_src(callback: CallbackQuery, state: FSMContext):
                 files.append([ds.store_list[date], ds.store_list[date]])
     if len(files) > 0:
         await callback.message.answer(
-            text="Список файлов:",
-            reply_markup=BotWoody.inline_keyboard_cb_data(files))
+            text="Выберите файл для скачивания:",
+            reply_markup=BotWoody.inline_keyboard_cb_data(files, size=1))
     # установка в состояние выбора файла для скачивания
     await state.set_state(BotWoody.WoodyStates.state_cmd_get_filechoice)
 
 
+# Выбор файла данных
 @router.callback_query(BotWoody.WoodyStates.state_cmd_get_filechoice)
 async def cmd_get_choice_file(callback: CallbackQuery, state: FSMContext):
+    # Извлечение имени файла
     file_name = callback.data
     await callback.message.delete()
     await callback.message.answer(f'Выгрузка: {file_name} ...')
@@ -67,6 +72,7 @@ async def cmd_get_choice_file(callback: CallbackQuery, state: FSMContext):
     await state.clear()
 
 
+# Отмена команды
 @router.message(BotWoody.WoodyStates.state_cmd_get_filechoice,
                 Command(commands=['cancel'])
                 )
@@ -78,6 +84,7 @@ async def cmd_get_cancel(message: Message, state: FSMContext):
     await message.answer('Отменено: /get', reply_markup=ReplyKeyboardRemove())
 
 
+# Реакция на ошибку выбора источника или файла
 @router.message(BotWoody.WoodyStates.state_cmd_get)
 @router.message(BotWoody.WoodyStates.state_cmd_get_filechoice)
 async def cmd_get_wrong(message: Message):

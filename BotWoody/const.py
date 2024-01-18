@@ -6,11 +6,11 @@
 # -------------------------------------------------------------
 BOT_API_TOKEN = '6337261385:AAEp6bGQNVxfaG9Rg5cBlccQ8M4Qz3KKyPc'
 
-BOT_ADMINS = [5172447001, 1280985750]
+BOT_ADMINS = [5172447001]  # , 1280985750]
 #                        KuznecovAO
 BOT_USERS = [5172447001, 1919089583]
-#                            Koryahova
-BOT_OPERATORS = [5172447001, 803218706]
+#                            Koryahova  KuznecovAO
+BOT_OPERATORS = [5172447001, 803218706, 1919089583]
 
 BOT_HELP_ADM_COMMANDS = [
     "/help - справка по командам",
@@ -42,6 +42,7 @@ BOT_HELP_USER_COMMANDS = [
 
 FILE_REQUEST_TIMEOUT = 300
 
+BOT_KEY_ICONS = ['🗃️', '📁', '🌐']
 
 # -------------------------------------------------------------
 # =============================================================
@@ -52,4 +53,5 @@ EMAIL_PORT = 587
 EMAIL_APP_NAME = 'ScanerBot'
 EMAIL_LOGIN = 'vomit2180@gmail.com'
 EMAIL_PASSWORD = 'bhvy utfg keqp oiag'
+EMAIL_MAX_FILE_SIZE = 1048576
 

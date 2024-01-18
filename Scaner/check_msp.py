@@ -9,7 +9,7 @@ log: Lib.AppLogger = Lib.AppLogger(__name__,
                                    log_level=Lib.INFO)
 
 
-def check_msp():
+async def check_msp():
     name = 'MSP'
     try:
         f = Lib.DLStore(name=name,

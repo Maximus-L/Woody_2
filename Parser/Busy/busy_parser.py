@@ -26,7 +26,8 @@ DATE_KEY = 'stat_date'
 # ключ регион
 REGION_KEY = 'cnt_name'
 # столбцы в результирующем датафрейме
-COLUMNS = ['date', 'region', 'opf', 'cat', 'factory', 'staff', 'tst_r']
+COLUMNS = ['date', 'region', 'opf', 'cat', 'factory', 'staff']
+# COLUMNS = ['date', 'region', 'opf', 'cat', 'factory', 'staff', 'tst_r']
 
 log: Lib.AppLogger = Lib.AppLogger(__name__,
                                    output='BOTH',
@@ -50,7 +51,7 @@ def busy_last_date(url, spr_regions: Lib.Spr = None) -> list[DataFrame | Series 
     except Exception as e:
         raise e
     # Разделение строки со словарями на список строк, в каждой - 1 словарь
-    str_dicts = re.finditer('{(.+?)}', all_data)
+    str_dicts = re.finditer("{(.+?)}", all_data)
     # Цикл по списку строк со словарями
     for str_dict in str_dicts:
         # Преобразование строки со словарем в словарь
@@ -100,8 +101,7 @@ def busy_last_date(url, spr_regions: Lib.Spr = None) -> list[DataFrame | Series 
                 # factory = reg_dict[factory_key_val] if factory_key_val in reg_dict else None
                 # staff = reg_dict[staff_key_val] if staff_key_val in reg_dict else None
                 result = pd.concat([result,
-                                    pd.DataFrame([[date, reg_id, opf, cat, factory, staff,
-                                                   region]],
+                                    pd.DataFrame([[date, reg_id, opf, cat, factory, staff]],
                                                  columns=COLUMNS)
                                     ], ignore_index=True)
     return list([date, result])

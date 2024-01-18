@@ -9,7 +9,7 @@ log: Lib.AppLogger = Lib.AppLogger(__name__,
                                    log_level=Lib.INFO)
 
 
-def check_busy():
+async def check_busy():
     name = 'BUSY'
     try:
         f = Lib.DLStore(name=name,

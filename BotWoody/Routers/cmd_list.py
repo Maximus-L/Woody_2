@@ -4,7 +4,6 @@ from aiogram import Router, F
 from aiogram.filters import Command
 from aiogram.types import Message, ReplyKeyboardRemove, CallbackQuery
 from aiogram.fsm.context import FSMContext
-from aiogram.enums.dice_emoji import DiceEmoji
 
 import BotWoody
 import Scaner
@@ -24,7 +23,7 @@ async def cmd_list_answer(message: Message, state: FSMContext):
     for name in Scaner.DATA_SOURCE.keys():
         keys.append([Scaner.DATA_SOURCE[name]['description'], name])
     await message.answer(text="Выберите источник:",
-                         reply_markup=BotWoody.inline_keyboard_cb_data(keys))
+                         reply_markup=BotWoody.inline_keyboard_cb_data(keys, size=2, pict=1))
     # установка состояния в ожидание выбора источника
     await state.set_state(BotWoody.WoodyStates.state_cmd_list)
 
@@ -32,12 +31,13 @@ async def cmd_list_answer(message: Message, state: FSMContext):
 @router.callback_query(BotWoody.WoodyStates.state_cmd_list,
                        F.data.in_(Scaner.DATA_SOURCE.keys()))
 async def cmd_list_choice_src(callback: CallbackQuery, state: FSMContext):
+    # Извлечение имени источника
     name = callback.data
     await callback.message.delete()
     await callback.message.answer(name)
     await callback.answer(text="Список файлов:",
                           reply_markup=ReplyKeyboardRemove())
-    # await callback.message.answer_dice(emoji=DiceEmoji.SLOT_MACHINE)
+    # Формирование списка файлов
     for ds in BotWoody.data_storages:
         if ds.name == name:
             for date in ds.store_list.keys():
@@ -45,6 +45,7 @@ async def cmd_list_choice_src(callback: CallbackQuery, state: FSMContext):
     await state.clear()
 
 
+# Отмена команды
 @router.message(BotWoody.WoodyStates.state_cmd_list,
                 Command(commands=['cancel', 'clr']))
 async def cmd_list_cancel(message: Message, state: FSMContext):
@@ -53,6 +54,7 @@ async def cmd_list_cancel(message: Message, state: FSMContext):
                          reply_markup=ReplyKeyboardRemove())
 
 
+# Реакция на неправильный выбор источника данных
 @router.message(BotWoody.WoodyStates.state_cmd_list)
 async def cmd_list_wrong_src(message: Message):
     keys = []

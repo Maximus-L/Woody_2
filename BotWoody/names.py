@@ -2,9 +2,11 @@ from aiogram import Bot
 from aiogram.fsm.state import StatesGroup, State
 
 import Lib
+import DbUsers
 
 bot: Bot
 data_storages: [Lib.DLStore]
+db_users: DbUsers.DbProvider
 
 
 class WoodyStates(StatesGroup):

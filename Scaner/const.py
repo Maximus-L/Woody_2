@@ -8,7 +8,7 @@ DATA_SOURCE = {
         'store_prefix': 'busy_',
         'spr_file': './SPR/spr_b.xlsx',
         'description': 'МСП занятые',
-        'cron': '0 */2 10-12 * *'
+        'cron': '5 */2 10-13 * *'
     },
     'MSP': {
         'url': 'https://www.nalog.gov.ru/opendata/7707329152-rsmp/',
@@ -20,6 +20,6 @@ DATA_SOURCE = {
         'archive_date_format': 'data-%d%m%Y',
         'temp_path': 'C:/My/DATA/XML/TMP',
         'description': 'МСП реестр',
-        'cron': '30 */4 11-15 * *'
+        'cron': '31 */4 11-15 * *'
     }
 }

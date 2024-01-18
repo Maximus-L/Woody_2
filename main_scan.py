@@ -28,6 +28,6 @@ def main():
 
 
 if __name__ == '__main__':
-    Scaner.check_msp()
-    # asyncio.get_event_loop().run_forever()
+    #Scaner.check_msp()
+    asyncio.get_event_loop().run_forever()
     # main()
