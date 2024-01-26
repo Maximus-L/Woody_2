@@ -15,11 +15,11 @@ import Scaner
 import BotWoody.const as const
 
 router = Router()
-a = BotWoody.db_users.get_users_of_role(role='ADMIN')
+# a = BotWoody.db_users.get_users_of_role(role='ADMIN')
 
 # Обработка команды /get
 @router.message(Command(commands=['tst']),
-                F.from_user.id.in_(a))
+                F.from_user.id.in_([]))
 async def cmd_get_answer(message: Message, state: FSMContext):
     keys = []
     for name in Scaner.DATA_SOURCE.keys():

@@ -13,6 +13,7 @@ import BotWoody
 import Scaner
 
 import BotWoody.const as const
+from BotWoody import BOT_LANG
 
 router = Router()
 
@@ -26,7 +27,7 @@ async def cmd_get_answer(message: Message, state: FSMContext):
     keys = []
     for name in Scaner.DATA_SOURCE.keys():
         keys.append([Scaner.DATA_SOURCE[name]['description'], name])
-    await message.answer(text="Выберите источник:",
+    await message.answer(text=BOT_LANG['/get'],
                          reply_markup=BotWoody.inline_keyboard_cb_data(keys, size=2, pict=1))
     # установка состояния в ожидание выбора источника
     await state.set_state(BotWoody.WoodyStates.state_cmd_get)
@@ -49,7 +50,7 @@ async def cmd_get_choice_src(callback: CallbackQuery, state: FSMContext):
                 files.append([ds.store_list[date], ds.store_list[date]])
     if len(files) > 0:
         await callback.message.answer(
-            text="Выберите файл для скачивания:",
+            text=BOT_LANG['/get file choice'],
             reply_markup=BotWoody.inline_keyboard_cb_data(files, size=1))
     # установка в состояние выбора файла для скачивания
     await state.set_state(BotWoody.WoodyStates.state_cmd_get_filechoice)
@@ -68,7 +69,7 @@ async def cmd_get_choice_file(callback: CallbackQuery, state: FSMContext):
     user = callback.from_user.id
     await BotWoody.bot.send_document(user, f,
                                      request_timeout=const.FILE_REQUEST_TIMEOUT)
-    await callback.message.answer('Готово!')
+    await callback.message.answer(text=BOT_LANG['/get ready'])
     await state.clear()
 
 
@@ -81,11 +82,11 @@ async def cmd_get_choice_file(callback: CallbackQuery, state: FSMContext):
                 )
 async def cmd_get_cancel(message: Message, state: FSMContext):
     await state.clear()
-    await message.answer('Отменено: /get', reply_markup=ReplyKeyboardRemove())
+    await message.answer(text=BOT_LANG['/get cancel'], reply_markup=ReplyKeyboardRemove())
 
 
 # Реакция на ошибку выбора источника или файла
 @router.message(BotWoody.WoodyStates.state_cmd_get)
 @router.message(BotWoody.WoodyStates.state_cmd_get_filechoice)
 async def cmd_get_wrong(message: Message):
-    await message.answer('Попробуйте еще или /cancel')
+    await message.answer(text=BOT_LANG['wrong choice'])

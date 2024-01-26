@@ -6,3 +6,4 @@ from .ds_init import data_stores_init
 from .names import *
 from .ds_check import data_store_check
 from .keyboards import *
+from .Lang import BOT_LANG

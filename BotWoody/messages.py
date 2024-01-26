@@ -13,7 +13,7 @@ async def msg_adm_started(bot, users=const.BOT_ADMINS):
     if users:
         for user in users:
             try:
-                await bot.send_message(user, 'Bot started')
+                await bot.send_message(user, '<b>Bot started</b>')
             except Exception as e:
                 log.error(f'ошибка пользователя {user}, {e}')
     else:

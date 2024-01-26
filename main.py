@@ -4,7 +4,7 @@ import asyncio
 import aiocron
 from aiogram import Bot, Dispatcher
 
-import DbUsers
+# import DbUsers
 import Lib
 import BotWoody.Routers
 import BotWoody
@@ -16,13 +16,13 @@ log: Lib.AppLogger = Lib.AppLogger(__name__,
                                    log_level=Lib.INFO)
 
 # Инициализация БД с пользователями
-BotWoody.db_users = DbUsers.DbProvider(connstr=DbUsers.sqlite_str)
+# BotWoody.db_users = DbUsers.DbProvider(connstr=DbUsers.sqlite_str)
 
 # Инициализация источников данных
 BotWoody.data_storages = BotWoody.data_stores_init()
 
 # Инициализация бота
-BotWoody.bot = Bot(token=BotWoody.BOT_API_TOKEN)
+BotWoody.bot = Bot(token=BotWoody.BOT_API_TOKEN, parse_mode='HTML')
 dp = Dispatcher()
 
 
@@ -63,15 +63,15 @@ async def main():
     dp.include_router(BotWoody.Routers.router_list)
     dp.include_router(BotWoody.Routers.router_get)
     dp.include_router(BotWoody.Routers.router_adm_cron)
-    dp.include_router(BotWoody.Routers.router_test)
+    # dp.include_router(BotWoody.Routers.router_test)
     dp.include_router(BotWoody.Routers.router_others)
     log.info('Bot started!')
-    await BotWoody.db_users.create_engine()
-    print(await BotWoody.db_users.get_roles())
-    # task = asyncio.create_task(BotWoody.msg_adm_started(BotWoody.bot))
+    # await BotWoody.db_users.create_engine()
+    # print(await BotWoody.db_users.get_roles())
+    task = asyncio.create_task(BotWoody.msg_adm_started(BotWoody.bot))
     await BotWoody.bot.delete_webhook(drop_pending_updates=True)
     await dp.start_polling(BotWoody.bot)
-    # await task
+    await task
 
 
 if __name__ == '__main__':

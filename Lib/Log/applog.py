@@ -28,7 +28,9 @@ def AppLogger(name: str,
     consoleHandler = logging.StreamHandler()
     consoleHandler.setLevel(log_level)
     fileHandler = logging.FileHandler(log_file, mode='a', encoding='UTF-8')
-    formatter = logging.Formatter('%(asctime)s [%(name)s %(filename)s #%(lineno)d]-%(levelname)s: %(message)s')
+    log_format = '{asctime} {name} {filename} #{lineno}-{levelname:8}: {message}'
+    # formatter = logging.Formatter('%(asctime)s [%(name)s %(filename)s #%(lineno)d]-%(levelname)s: %(message)s')
+    formatter = logging.Formatter(log_format, style="{")
     fileHandler.setFormatter(formatter)
     consoleHandler.setFormatter(formatter)
     if output == 'CONSOLE' or output == 'BOTH':
