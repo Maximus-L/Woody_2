@@ -23,10 +23,11 @@ async def busy():
 
 def main():
     #
-    Scaner.check_msp()
-    Scaner.check_busy()
+    # Scaner.check_msp()
+    # Scaner.check_busy()
+    Scaner.check_debt_loan()
 
 
 if __name__ == '__main__':
-    asyncio.get_event_loop().run_forever()
-    # main()
+    # asyncio.get_event_loop().run_forever()
+    main()

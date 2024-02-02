@@ -15,8 +15,7 @@ def parse2csv(name,
               url=None,
               spr_regions: Lib.Spr = None,
               date: datetime.date = None,
-              csv_path=None,
-              store: Lib.DLStore = None) -> pd.DataFrame() | None:
+              csv_path=None) -> pd.DataFrame() | None:
     file_name = None
     if name == 'BUSY':
         if url is not None and spr_regions is not None:
@@ -31,7 +30,7 @@ def parse2csv(name,
                                       spr_regions=spr_regions)
     if name in ['DEBT_LOAN_MSP', 'DEBT_LOAN_IP']:
         file_name = os.path.join(csv_path, const.DATA_SOURCE[name]['store_prefix']+'{:%Y-%m-%d}.csv'.format(date))
-        only_last_date = store.store_last_date is not None
+        only_last_date = False
         res_df = Parser.LoanDebt.loan_debt_data(url, name, only_last_date=only_last_date)
         res_df.to_csv(file_name, sep=';', mode='w', index=False, header=True)
 

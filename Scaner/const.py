@@ -27,7 +27,7 @@ DATA_SOURCE = {
         'store_path': 'C:/My/DATA/DEBT_LOAN/MSP',
         'store_prefix': 'debt_msp_',
         'spr_file': './SPR/spr_b.xlsx',
-        'archive_date_re': '\d{,2}.\d{,2}.\d{4}',
+        'archive_date_re': '\d{,2}-\d{,2}-\d{4}',
         'archive_date_format': '%d.%m.%Y',
         'description': 'Задолж.кред.МСП',
         'cron': '5 */3 18-25 * *',

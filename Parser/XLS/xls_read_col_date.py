@@ -41,15 +41,15 @@ RES_COLUMN = ['VAL_ID', 'OKATO_ID', 'DATE_', 'VALUE']
 
 
 def xls_reader_date_column(
-        file_name='default.xlsx',
-        sheet_name='sheet1',
-        val_id=0,
-        header=0,
-        region_name_col='Unnamed: 0',
-        region_id_col='Unnamed: 1',
-        region_suffix=DEFAULT_REGION_SUFFIX,
-        date_re=DEFAULT_DATE_RE,
-        date_format=DEFAULT_DATE_FORMAT,
+        file_name: str = 'default.xlsx',
+        sheet_name: str = 'sheet1',
+        val_id: int = 0,
+        header: int = 0,
+        region_name_col: str = 'Unnamed: 0',
+        region_id_col: str = 'Unnamed: 1',
+        region_suffix: str = DEFAULT_REGION_SUFFIX,
+        date_re: str = DEFAULT_DATE_RE,
+        date_format: str = DEFAULT_DATE_FORMAT,
         spr: Lib.Spr = None,
         return_last_date: bool = True
 ) -> [dt.datetime | None, pd.DataFrame | None]:
@@ -65,6 +65,7 @@ def xls_reader_date_column(
         date_re         регул.выраж. для поиска в наименованиях столбцов даты,
         date_format     формат преобразования даты,
         spr: applib.Spr экземпляр справочника регионов
+        :rtype: object
     """
     max_date = None
     # результирующий датафрейм
@@ -97,9 +98,14 @@ def xls_reader_date_column(
         return [None, None]
     for col in list_col_names:  # перебор всех колонок во входном датафрейме
         # если имя столбца содержит дату (поиск по регулярке)
-        if not re.search(date_re, col) is None:
+        if type(col) is dt.datetime:
+            date = col
+        elif re.search(date_re, col) is not None:
             # конвертирование имени столбца в дату
             date = dt.datetime.strptime(col, date_format)
+        else:
+            date = None
+        if date:
             if max_date is None or max_date < date:
                 max_date = date
             # формирование промежуточного датафрейма - делается срез
@@ -113,7 +119,10 @@ def xls_reader_date_column(
             res1[RES_COLUMN[2]] = date
             res1[RES_COLUMN[0]] = val_id
             # конкатенация результирующего и промежуточного датафрейма
-            res = pd.concat([res, res1])
+            if res:
+                res = pd.concat([res, res1])
+            else:
+                res = res1.copy(deep=True)
     return [max_date,
             res.loc[res[RES_COLUMN[2]] == max_date if return_last_date else res]]
 # ----------------------------------------------------------------------------------------

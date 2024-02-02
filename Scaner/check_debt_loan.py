@@ -9,7 +9,7 @@ log: Lib.AppLogger = Lib.AppLogger(__name__,
                                    log_level=Lib.INFO)
 
 
-async def check_debt_loan():
+def check_debt_loan():
     for name in ['DEBT_LOAN_MSP', 'DEBT_LOAN_IP']:
         try:
             f = Lib.DLStore(name=name,
@@ -27,4 +27,4 @@ async def check_debt_loan():
             else:
                 log.info(f'{name}: дата  CSV актуальна')
         except Exception as e:
-            log.error(e)
+            log.error(name)

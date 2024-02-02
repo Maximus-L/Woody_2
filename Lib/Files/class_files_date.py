@@ -52,7 +52,8 @@ class FilesStore(object):
                     date = dt.date(d1.year, d1.month, 1)
                     # Добавление файла в словарь
                     self.file_list[date] = filename
-        log.debug(list(str(a) for a in self.file_list.keys()))
+        if len(self.file_list.keys())>0:
+            log.debug(list(str(a) for a in self.file_list.keys()))
 
     def refresh(self):
         """

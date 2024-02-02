@@ -20,9 +20,8 @@ def loan_debt_last_date(url: str, name: str) -> dt.date:
         region_suffix=const.DATA_SOURCE[name]['region_suffix'],
         date_re=const.DATA_SOURCE[name]['archive_date_re'],
         date_format=const.DATA_SOURCE[name]['archive_date_format'],
-        spr=spr
-                                               )[0]
-    return result
+        spr=spr)
+    return result[0]
 
 
 def loan_debt_data(url: str, name: str, only_last_date: bool = True) -> pd.DataFrame:

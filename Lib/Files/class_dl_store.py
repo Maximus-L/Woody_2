@@ -113,8 +113,7 @@ class DLStore(object):
                                     url=self.url if self.__temp_path is None else self.__temp_path,
                                     spr_regions=self.__spr,
                                     date=self.__url_last_date if date is None else date,
-                                    csv_path=self.__store.store_path,
-                                    store=self)
+                                    csv_path=self.__store.store_path)
         self.__store.refresh()
         res_zip_path = os.path.join(self.__store.store_path, 'zip')
         if os.path.isdir(res_zip_path):
