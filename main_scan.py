@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime as dt
 import asyncio
 import aiocron
 import Lib
@@ -23,11 +22,11 @@ async def busy():
 
 
 def main():
+    #
     Scaner.check_msp()
     Scaner.check_busy()
 
 
 if __name__ == '__main__':
-    #Scaner.check_msp()
     asyncio.get_event_loop().run_forever()
     # main()

@@ -18,4 +18,4 @@ async def cmd_help_answer_adm(message: Message):
     await message.answer(text=BOT_LANG['/cron'],
                          reply_markup=ReplyKeyboardRemove())
     for name in Scaner.DATA_SOURCE.keys():
-        await message.answer(text=f"{name}: [{Scaner.DATA_SOURCE[name]['cron']}]")
+        await message.answer(text=f"{name}: {const.BOT_KEY_ICONS[3]}[{Scaner.DATA_SOURCE[name]['cron']}]")

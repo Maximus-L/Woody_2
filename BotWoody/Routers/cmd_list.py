@@ -38,10 +38,11 @@ async def cmd_list_choice_src(callback: CallbackQuery, state: FSMContext):
     await callback.answer(text="Список файлов:",
                           reply_markup=ReplyKeyboardRemove())
     # Формирование списка файлов
+    icon = const.BOT_KEY_ICONS[4]
     for ds in BotWoody.data_storages:
         if ds.name == name:
             for date in ds.store_list.keys():
-                await callback.message.answer(text='🏷️'+ds.store_list[date])
+                await callback.message.answer(text=icon+ds.store_list[date])
     await state.clear()
 
 

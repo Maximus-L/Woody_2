@@ -40,22 +40,6 @@ async def check_stores():
                                         users_email=['larinma@cbr.ru'])
 
 
-def tst_send_mail():
-    import smtplib as smtp
-
-    login = 'vomit2180@gmail.com'
-    password = 'bhvy utfg keqp oiag'
-
-    server = smtp.SMTP(host='smtp.gmail.com', port=587)
-    server.starttls()
-    server.login(login, password)
-
-    subject = 'MSP testing'
-    text = 'msp-2023-11-01'
-
-    server.sendmail(login, to_addrs='larinma@cbr.ru', msg=f'Subject:{subject}\n{text}')
-
-
 async def main():
     # Подключение роутеров
     dp.include_router(BotWoody.Routers.router_help)
@@ -75,7 +59,6 @@ async def main():
 
 
 if __name__ == '__main__':
-    # tst_send_mail()
     asyncio.get_event_loop().run_until_complete(main())
     asyncio.get_event_loop().run_forever()
 

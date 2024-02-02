@@ -1,11 +1,16 @@
 # -*- coding: utf-8 -*-
+import os
+from dotenv import load_dotenv
 
+# загрузка файла конфигурации
+dotenv_path = './.env'
+if os.path.exists(dotenv_path):
+    load_dotenv(dotenv_path)
 # -------------------------------------------------------------
 # =============================================================
 # TELEGRAM BOT-+=
 # -------------------------------------------------------------
-BOT_API_TOKEN = '6337261385:AAEp6bGQNVxfaG9Rg5cBlccQ8M4Qz3KKyPc'
-
+BOT_API_TOKEN = os.environ.get('BOT_API_TOKEN')
 BOT_ADMINS = [5172447001]  # , 1280985750]
 #                        KuznecovAO
 BOT_USERS = [5172447001, 1919089583]
@@ -42,16 +47,15 @@ BOT_HELP_USER_COMMANDS = [
 
 FILE_REQUEST_TIMEOUT = 300
 
-BOT_KEY_ICONS = ['🗃️', '📁', '🌐']
+BOT_KEY_ICONS = ['🗃️', '📁', '🌐', '⏰', '🏷️']
 
 # -------------------------------------------------------------
 # =============================================================
 # E-MAIL-+=
 # -------------------------------------------------------------
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_APP_NAME = 'ScanerBot'
-EMAIL_LOGIN = 'vomit2180@gmail.com'
-EMAIL_PASSWORD = 'bhvy utfg keqp oiag'
-EMAIL_MAX_FILE_SIZE = 1048576
-
+EMAIL_HOST = os.environ.get('EMAIL_HOST')
+EMAIL_PORT = os.environ.get('EMAIL_PORT')
+EMAIL_APP_NAME = os.environ.get('EMAIL_APP_NAME')
+EMAIL_LOGIN = os.environ.get('EMAIL_LOGIN')
+EMAIL_PASSWORD = os.environ.get('EMAIL_PASSWORD')
+EMAIL_MAX_FILE_SIZE = os.environ.get('EMAIL_MAX_FILE_SIZE')
