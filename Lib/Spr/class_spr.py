@@ -16,7 +16,7 @@ DEFAULT_SPR_FILE_NAME = "./SPR/spr_b.xlsx"
 
 log: Lib.AppLogger = Lib.AppLogger(__name__,
                                    output='BOTH',
-                                   log_file='./LOGS/scaner.log',
+                                   log_file='./LOGS/scan_spr.log',
                                    log_level=Lib.ERROR)
 
 
@@ -103,8 +103,7 @@ class Spr(object):
         for spr, spr_name in zip(self.__list_values, self.__spr_list):  # Перебор словарей
             if key in spr:
                 return str(spr[key])
-            else:
-                log.debug(f"<{key}> не найден в справочнике [{spr_name}]")
+        log.debug(f"<{key}> не найден в справочнике")
         return result
 
 

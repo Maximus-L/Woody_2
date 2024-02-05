@@ -27,4 +27,4 @@ def check_debt_loan():
             else:
                 log.info(f'{name}: дата  CSV актуальна')
         except Exception as e:
-            log.error(name)
+            log.error(f'({name}), {e}')

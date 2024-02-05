@@ -8,7 +8,7 @@ import Scaner.const as const
 import Lib.Spr
 
 
-def loan_debt_last_date(url: str, name: str) -> dt.date:
+def loan_debt_last_date(url: str, name: str):
     spr: Lib.Spr = Lib.Spr(const.DATA_SOURCE[name]['spr_file'])
     result = Parser.XLS.xls_reader_date_column(
         url,
@@ -21,7 +21,7 @@ def loan_debt_last_date(url: str, name: str) -> dt.date:
         date_re=const.DATA_SOURCE[name]['archive_date_re'],
         date_format=const.DATA_SOURCE[name]['archive_date_format'],
         spr=spr)
-    return result[0]
+    return result
 
 
 def loan_debt_data(url: str, name: str, only_last_date: bool = True) -> pd.DataFrame:

@@ -24,7 +24,6 @@ import locale
 import pandas as pd
 
 import Lib
-import Scaner.const as const
 
 # А вот это исключительно для того, чтобы "Август 2021" правильно конвертился
 locale.setlocale(locale.LC_ALL, ('ru_RU', 'UTF-8'))
@@ -69,7 +68,7 @@ def xls_reader_date_column(
     """
     max_date = None
     # результирующий датафрейм
-    res = pd.DataFrame(columns=RES_COLUMN)
+    res = pd.DataFrame(columns=RES_COLUMN, index=None)
     try:
         # чтение эксель файла в датафрейм
         if os.path.splitext(file_name)[1].upper() == '.XLSX':
@@ -105,7 +104,8 @@ def xls_reader_date_column(
             date = dt.datetime.strptime(col, date_format)
         else:
             date = None
-        if date:
+        if date is not None:
+            date = dt.date(date.year, date.month, date.day)
             if max_date is None or max_date < date:
                 max_date = date
             # формирование промежуточного датафрейма - делается срез
@@ -119,10 +119,16 @@ def xls_reader_date_column(
             res1[RES_COLUMN[2]] = date
             res1[RES_COLUMN[0]] = val_id
             # конкатенация результирующего и промежуточного датафрейма
-            if res:
-                res = pd.concat([res, res1])
-            else:
-                res = res1.copy(deep=True)
-    return [max_date,
-            res.loc[res[RES_COLUMN[2]] == max_date if return_last_date else res]]
+            try:
+                if res is not None:
+                    res = pd.concat([res, res1], ignore_index=True)
+                else:
+                    res = res1.copy(deep=True)
+            except Exception as e:
+                log.error(e)
+    if return_last_date:
+        result = res.loc[res[RES_COLUMN[2]] == max_date]
+    else:
+        result = res
+    return list([max_date, result])
 # ----------------------------------------------------------------------------------------

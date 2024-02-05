@@ -25,7 +25,6 @@ def url_data_last_date(name, url) -> dt.date | None:
     if name in ['DEBT_LOAN_MSP', 'DEBT_LOAN_IP']:
         try:
             result = Parser.LoanDebt.loan_debt_last_date(url, name)
-            print(result)
         except Exception as e:
             result = None
         finally:
