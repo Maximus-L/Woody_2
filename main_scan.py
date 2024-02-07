@@ -21,11 +21,16 @@ async def busy():
     await Scaner.check_busy()
 
 
+@aiocron.crontab(Scaner.DATA_SOURCE['DEBT_LOAN_MSP']['cron'])
+async def debt_loan():
+    await Scaner.check_debt_loan()
+
+
 def main():
-    #
+    pass
     # Scaner.check_msp()
     # Scaner.check_busy()
-    Scaner.check_debt_loan()
+    # Scaner.check_debt_loan()
 
 
 if __name__ == '__main__':

@@ -18,7 +18,7 @@ delete_words = ["блять", "сука", "хуй", "ебал", "пизда", "�
 async def cmd_help_answer_other(message: Message):
     if message.text:
         if any(word in message.text.lower() for word in delete_words):
-            log.debug(f'[{message.from_user.id}]: "{message.text}"')
+            log.debug(f'[{message.from_user.id}][{message.from_user.username}]: "{message.text}"')
             await message.answer(text="Будешь материться - забаню к херам!",
                                  reply_markup=ReplyKeyboardRemove())
     await message.answer(text="Список команд: /help",
