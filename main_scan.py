@@ -30,7 +30,7 @@ def main():
     pass
     # Scaner.check_msp()
     # Scaner.check_busy()
-    # Scaner.check_debt_loan()
+    Scaner.check_debt_loan()
 
 
 if __name__ == '__main__':
