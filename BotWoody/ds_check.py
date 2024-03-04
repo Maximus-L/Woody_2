@@ -37,6 +37,8 @@ async def data_store_check(store: Lib.DLStore,
     """
     new = store.refresh()
     if new is not None and new:
+        filename = store.store_list[store.store_last_date]
+        filepath = os.path.join(store.store_p, filename)
         # Тут надо определить список пользователей кому и что отправлять
         # возможно msg_type будет не нужен
         if users_msg:
@@ -47,8 +49,6 @@ async def data_store_check(store: Lib.DLStore,
                 except Exception as e:
                     log.error(f'ошибка пользователя {user}, {e}')
         if users_file:
-            filename = store.store_list[store.store_last_date]
-            filepath = os.path.join(store.store_p, filename)
             for user in users_file:
                 try:
                     f = FSInputFile(str(filepath), filename)
@@ -57,8 +57,6 @@ async def data_store_check(store: Lib.DLStore,
                 except Exception as e:
                     log.error(f'ошибка пользователя {user}, {e}')
         if users_email:
-            filename = store.store_list[store.store_last_date]
-            filepath = os.path.join(store.store_p, filename)
             send_email_attach(msg_to=users_email,
                               msg_subj=scan_const.DATA_SOURCE[store.name]["description"],
                               attachment_file=filepath,
@@ -93,7 +91,7 @@ def send_email_attach(msg_to, msg_subj, attachment_file, filename):
         # Невозможно сделать предположение, или файл закодирован (сжат), поэтому
         # используйте общий тип пакета битов.
         ctype = 'application/octet-stream'
-    maintype, subtype = ctype.split('/', 1)
+    maintype, subtype = ctype.split(sep='/', maxsplit=1)
     with open(attachment_file, 'rb') as fp:
         msg.add_attachment(fp.read(),
                            maintype=maintype,

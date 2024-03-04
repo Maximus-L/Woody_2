@@ -28,7 +28,7 @@ import Lib
 # А вот это исключительно для того, чтобы "Август 2021" правильно конвертился
 locale.setlocale(locale.LC_ALL, ('ru_RU', 'UTF-8'))
 log: Lib.AppLogger = Lib.AppLogger(__name__, output='BOTH',
-                                   log_file='./LOGS/scan.log')
+                                   log_file='./LOGS/scaner.log')
 
 DEFAULT_FILE = '1.xlsx'
 ENGINE10 = 'x'
@@ -55,6 +55,7 @@ def xls_reader_date_column(
     """
     Параметры:
         file_name   имя файла эксель,
+        sheet_name  имя листа
         val_id      id показателя
         header      номер строки с заголовками,
         region_name_col имя столбца с наименованием регионов
@@ -64,7 +65,9 @@ def xls_reader_date_column(
         date_re         регул.выраж. для поиска в наименованиях столбцов даты,
         date_format     формат преобразования даты,
         spr: applib.Spr экземпляр справочника регионов
-        :rtype: object
+        return_last_date  true - возвращает набор данных только на последнюю дату
+                                иначе - весь набор данных
+        :rtype: [<последняя дата>, <набор данных>]
     """
     max_date = None
     # результирующий датафрейм

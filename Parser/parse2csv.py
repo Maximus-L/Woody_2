@@ -30,8 +30,11 @@ def parse2csv(name,
                                       spr_regions=spr_regions)
     if name in ['DEBT_LOAN_MSP', 'DEBT_LOAN_IP']:
         file_name = os.path.join(csv_path, const.DATA_SOURCE[name]['store_prefix']+'{:%Y-%m-%d}.csv'.format(date))
-        only_last_date = False
+        only_last_date = True
         res_df = Parser.LoanDebt.loan_debt_data(url, name, only_last_date=only_last_date)
-        res_df.to_csv(file_name, sep=';', mode='w', index=False, header=True)
+        if res_df is not None:
+            res_df.to_csv(file_name, sep=';', mode='w', index=False, header=True)
+        else:
+            file_name = None
 
     return file_name

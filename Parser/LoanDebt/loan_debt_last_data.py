@@ -1,6 +1,5 @@
 # -*- coding: utf-8 -*-
 
-import datetime as dt
 import pandas as pd
 
 import Parser.XLS
@@ -24,7 +23,7 @@ def loan_debt_last_date(url: str, name: str):
     return result
 
 
-def loan_debt_data(url: str, name: str, only_last_date: bool = True) -> pd.DataFrame:
+def loan_debt_data(url: str, name: str, only_last_date: bool = True) -> pd.DataFrame | None:
     spr: Lib.Spr = Lib.Spr(const.DATA_SOURCE[name]['spr_file'])
     result = None
     for val in const.DATA_SOURCE[name]['values']:
