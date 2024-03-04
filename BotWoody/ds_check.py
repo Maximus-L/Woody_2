@@ -76,6 +76,13 @@ async def data_store_check(store: Lib.DLStore,
 
 
 def send_email_attach(msg_to, msg_subj, attachment_file, filename):
+    """
+    :param msg_to:      список с адресами типа ["adr1@cbr.ru", "adr2@cbr.ru", "adr3@cbr.ru"]
+    :param msg_subj:    тема сообщения
+    :param attachment_file:     файл для отправки
+    :param filename:            имя файла (без пути а как будет называться в сообщении)
+    :return:
+    """
     file_size = os.path.getsize(attachment_file)
     # Если размер файла > 1Mb
     if file_size > const.EMAIL_MAX_FILE_SIZE:
