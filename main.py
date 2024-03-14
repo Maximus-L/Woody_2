@@ -3,11 +3,12 @@ import asyncio
 
 import aiocron
 from aiogram import Bot, Dispatcher
+import redis
 
 # import DbUsers
 import Lib
-import BotWoody.Routers
 import BotWoody
+import BotWoody.Routers
 
 
 log: Lib.AppLogger = Lib.AppLogger(__name__,
@@ -42,10 +43,12 @@ async def check_stores():
 
 async def main():
     # Подключение роутеров
+    # BotWoody.r = redis.Redis(host="localhost", port=6379)
     dp.include_router(BotWoody.Routers.router_help)
     dp.include_router(BotWoody.Routers.router_urls)
     dp.include_router(BotWoody.Routers.router_list)
     dp.include_router(BotWoody.Routers.router_get)
+    dp.include_router(BotWoody.Routers.router_user)
     dp.include_router(BotWoody.Routers.router_adm_cron)
     # dp.include_router(BotWoody.Routers.router_test)
     dp.include_router(BotWoody.Routers.router_others)

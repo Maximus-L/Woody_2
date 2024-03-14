@@ -13,6 +13,7 @@ import BotWoody
 import Scaner
 
 import BotWoody.const as const
+import BotWoody.Filt as Filt
 from BotWoody import BOT_LANG
 
 router = Router()
@@ -23,6 +24,8 @@ router = Router()
                 F.from_user.id.in_(const.BOT_OPERATORS))
 @router.message(Command(commands=['get']),
                 F.from_user.id.in_(const.BOT_ADMINS))
+@router.message(Command(commands=['get']),
+                Filt.UsersByRole(['admin', 'operator']))
 async def cmd_get_answer(message: Message, state: FSMContext):
     keys = []
     for name in Scaner.DATA_SOURCE.keys():

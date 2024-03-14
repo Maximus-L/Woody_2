@@ -5,13 +5,14 @@ from aiogram.types import Message, ReplyKeyboardRemove
 from aiogram.fsm.context import FSMContext
 
 import BotWoody
+import BotWoody.Filt as Filt
 import Scaner
 
 router = Router()
 
 
 # /urls command
-@router.message(Command(commands=['urls']))
+@router.message(Command(commands=['urls']), Filt.UsersByRole(['admin', 'operator', 'user']))
 async def cmd_urls_answer(message: Message, state: FSMContext):
     await message.answer(text='-----------------', reply_markup=ReplyKeyboardRemove())
     await message.answer(text="Ссылки на данные:",
