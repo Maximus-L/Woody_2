@@ -12,12 +12,14 @@ import BotWoody
 import BotWoody.const as const
 import BotWoody.Filt as Filt
 from BotWoody import BOT_LANG
-from .Users import router_user_add, router_user_list, router_user_edit
+from .Users import (router_user_add, router_user_list,
+                    router_user_edit, router_task_email)
 
 router = Router()
 router.include_router(router_user_add)
 router.include_router(router_user_list)
 router.include_router(router_user_edit)
+router.include_router(router_task_email)
 
 
 # @router.message(Command(commands=['user']))

@@ -8,5 +8,3 @@ from .cmd_user import router as router_user
 from .adm_cmd_cron import router as router_adm_cron
 from .others import router as router_others
 from .cmd_test import router as router_test
-from .Users import router_user_add
-

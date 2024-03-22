@@ -10,6 +10,7 @@ import BotWoody
 import BotWoody.Routers
 
 import DbRedis
+import BotWoody.Filt as Filt
 
 import BotWoody.const as const
 from BotWoody import BOT_LANG
@@ -31,16 +32,22 @@ async def cmd_user_list(callback: CallbackQuery, state: FSMContext):
     await state.set_state(BotWoody.WoodyStates.state_cmd_user_list)
 
 
-@router.callback_query(BotWoody.WoodyStates.state_cmd_user_list,
-                       F.data.in_([str(x) for x in DbRedis.get_users_by_role()]))
+@router.callback_query(BotWoody.WoodyStates.state_cmd_user_list)
 async def cmd_user_list_choice_user_operation(callback: CallbackQuery, state: FSMContext):
-    await state.update_data(user_id=callback.data)
-    keys = BotWoody.BOT_KEYS_USER_OPERATION
+    users = DbRedis.get_users_by_role()
+    # print(users)
     await callback.message.delete()
-    await callback.message.answer(f'Пользователь [{callback.data}]:',
-                                  reply_markup=BotWoody.inline_keyboard_cb_data(keys, size=2, pict=5))
-    # установка в состояние добавления пользователя и ввода ID
-    await state.set_state(BotWoody.WoodyStates.state_cmd_user_list_choice_user)
+    if int(callback.data) in users:
+        await state.update_data(user_id=callback.data)
+        keys = BotWoody.BOT_KEYS_USER_OPERATION
+        await callback.message.answer(f'Пользователь [{callback.data}]:',
+                                      reply_markup=BotWoody.inline_keyboard_cb_data(keys, size=2, pict=5))
+        # установка в состояние добавления пользователя и ввода ID
+        await state.set_state(BotWoody.WoodyStates.state_cmd_user_list_choice_user)
+    else:
+        await callback.message.answer(f'Неверный ID: [{callback.data}]')
+        await callback.message.answer('Действие отменено')
+        await state.clear()
 
 
 @router.callback_query(BotWoody.WoodyStates.state_cmd_user_list_choice_user,

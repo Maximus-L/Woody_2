@@ -61,6 +61,16 @@ async def data_store_check(store: Lib.DLStore,
                               msg_subj=scan_const.DATA_SOURCE[store.name]["description"],
                               attachment_file=filepath,
                               filename=filename)
+    if users_email:
+        filename = store.store_list[store.store_last_date]
+        filepath = os.path.join(store.store_p, filename)
+        print(store.name, users_email)
+        print(filename, filepath)
+        # send_email_attach(msg_to=elist,
+        #               msg_subj='send busy',
+        #               attachment_file='C:/My/DATA/RMSP/busy_2023-11-01.csv',
+        #               filename='busy_2023-11-01.csv')
+
             # for user in users_email:
             #     try:
             #         with smtp.SMTP(host=const.EMAIL_HOST, port=const.EMAIL_PORT) as server:
@@ -85,7 +95,7 @@ def send_email_attach(msg_to, msg_subj, attachment_file, filename):
     """
     file_size = os.path.getsize(attachment_file)
     # Если размер файла > 1Mb
-    if file_size > const.EMAIL_MAX_FILE_SIZE:
+    if file_size > int(const.EMAIL_MAX_FILE_SIZE):
         log.info(f'Не отправлен: {filename}, размер={file_size}')
         return None
     msg = EmailMessage()

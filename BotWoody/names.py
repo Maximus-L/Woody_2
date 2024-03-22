@@ -30,3 +30,8 @@ class WoodyStatesUserEdit(StatesGroup):
     state_wait_value = State()
     state_wait_name = State()
     state_wait_role = State()
+
+
+class WoodyStatesTask(StatesGroup):
+    state_wait_choice = State()
+    state_wait_user = State()

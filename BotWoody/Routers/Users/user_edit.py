@@ -24,7 +24,7 @@ async def cmd_user_list_choice_user_update(callback: CallbackQuery, state: FSMCo
     user_id = data['user_id']
     await callback.message.delete()
     user_detail = DbRedis.get_user_detail(user_id)
-    print(user_detail)
+    # print(user_detail)
     if DbRedis.R_USERS_EMAIL_KEY not in user_detail.keys():
         user_detail[DbRedis.R_USERS_EMAIL_KEY] = "-"
     if DbRedis.R_USERS_ENABLED_KEY not in user_detail.keys():
@@ -86,3 +86,6 @@ async def cmd_user_edit_role(callback: CallbackQuery, state: FSMContext):
     data['role'] = callback.data
     DbRedis.db_user_update(user_id, mapping={'role': data['role']})
     await callback.message.answer(f'Внесено в БД')
+    await BotWoody.bot.send_message(int(user_id),
+                                    text=f'Ваша роль заменена на: ({data["role"]})')
+

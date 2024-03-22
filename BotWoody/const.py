@@ -23,7 +23,8 @@ BOT_USER_ROLES = [['Пользователь', 'user'],
                   ['Гость', 'guest']]
 
 BOT_KEYS_USERS_OPERATIONS = [['Список', 'list'],
-                            ['Добавить', 'add']]
+                             ['Добавить', 'add'],
+                             ['Задача', 'task']]
 BOT_KEYS_USER_OPERATION = [['Изменить', 'update'],
                            ['Удалить', 'del']]
 

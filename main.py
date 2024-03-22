@@ -5,6 +5,7 @@ import aiocron
 from aiogram import Bot, Dispatcher
 import redis
 
+import DbRedis
 # import DbUsers
 import Lib
 import BotWoody
@@ -38,7 +39,7 @@ async def check_stores():
     # print('checking...')
     for store in BotWoody.data_storages:
         await BotWoody.data_store_check(store,
-                                        users_email=['larinma@cbr.ru'])
+                                        users_email=DbRedis.db_task_get_emails(task_name=store.name))
 
 
 async def main():
