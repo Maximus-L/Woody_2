@@ -20,10 +20,10 @@ router = Router()
 
 
 # Обработка команды /get
-@router.message(Command(commands=['get']),
-                F.from_user.id.in_(const.BOT_OPERATORS))
-@router.message(Command(commands=['get']),
-                F.from_user.id.in_(const.BOT_ADMINS))
+# @router.message(Command(commands=['get']),
+#                 F.from_user.id.in_(const.BOT_OPERATORS))
+# @router.message(Command(commands=['get']),
+#                 F.from_user.id.in_(const.BOT_ADMINS))
 @router.message(Command(commands=['get']),
                 Filt.UsersByRole(['admin', 'operator']))
 async def cmd_get_answer(message: Message, state: FSMContext):

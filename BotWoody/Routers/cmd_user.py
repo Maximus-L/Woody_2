@@ -33,15 +33,13 @@ async def cmd_get_answer(message: Message, state: FSMContext):
     await state.set_state(BotWoody.WoodyStates.state_cmd_user)
 
 
-@router.message(StateFilter(BotWoody.WoodyStates.state_cmd_user),
-                Command(commands=['cancel'])
-                )
-@router.message(StateFilter(BotWoody.WoodyStates.state_cmd_user_add),
-                Command(commands=['cancel'])
-                )
-@router.message(StateFilter(BotWoody.WoodyStates.state_cmd_user_list),
-                Command(commands=['cancel'])
-                )
+@router.message(StateFilter(BotWoody.WoodyStates.state_cmd_user), Command(commands=['cancel']))
+@router.message(StateFilter(BotWoody.WoodyStates.state_cmd_user_add), Command(commands=['cancel']))
+@router.message(StateFilter(BotWoody.WoodyStates.state_cmd_user_list), Command(commands=['cancel']))
+@router.message(BotWoody.WoodyStatesTask.state_wait_choice, Command(commands=['cancel']))
+@router.message(BotWoody.WoodyStatesTask.state_wait_user, Command(commands=['cancel']))
+@router.message(BotWoody.WoodyStatesTask.state_wait_user_for_add, Command(commands=['cancel']))
+@router.message(BotWoody.WoodyStatesTask.state_wait_user_del_yes_no, Command(commands=['cancel']))
 async def cmd_get_cancel(message: Message, state: FSMContext):
     await state.clear()
     await message.answer(text=BOT_LANG['/user cancel'], reply_markup=ReplyKeyboardRemove())

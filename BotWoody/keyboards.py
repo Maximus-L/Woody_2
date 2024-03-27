@@ -5,13 +5,20 @@ from aiogram.utils.keyboard import ReplyKeyboardBuilder, InlineKeyboardBuilder
 
 import BotWoody.const as const
 
+
 # Клавиши да нет
-def keyboard_yes_no() -> ReplyKeyboardMarkup:
-    kb = ReplyKeyboardBuilder()
-    kb.button(text="Да")
-    kb.button(text="Нет")
-    kb.adjust(2)
-    return kb.as_markup(resize_keyboard=True)
+def keyboard_yes_no() -> InlineKeyboardMarkup:
+    builder = InlineKeyboardBuilder()
+    builder.add(types.InlineKeyboardButton(
+            text='Да',
+            callback_data='YES')
+        )
+    builder.add(types.InlineKeyboardButton(
+            text='Нет',
+            callback_data='NO')
+        )
+    builder.adjust(2, repeat=True)
+    return builder.as_markup()
 
 
 # ссылки на страницы с данными

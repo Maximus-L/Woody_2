@@ -17,3 +17,8 @@ from .tasks import db_task_del_user_email
 from .tasks import db_task_get_users_email
 from .tasks import db_task_get_emails
 from .tasks import get_task_list
+from .tasks import R_SET_TASKS
+from .tasks import R_PREFIX_TASK
+from .tasks import R_PREFIX_EMAIL_USERS
+from .tasks import R_PREFIX_FILES_USERS
+from .tasks import R_PREFIX_PRIMARY

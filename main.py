@@ -38,8 +38,10 @@ dp = Dispatcher()
 async def check_stores():
     # print('checking...')
     for store in BotWoody.data_storages:
+        emails = DbRedis.db_task_get_emails(task_name=store.name)
+        # print(emails)
         await BotWoody.data_store_check(store,
-                                        users_email=DbRedis.db_task_get_emails(task_name=store.name))
+                                        users_email=emails)
 
 
 async def main():

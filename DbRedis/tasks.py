@@ -30,7 +30,6 @@ def get_task_list() -> list:
     return res
 
 
-
 def db_task_add_user_email(task_name, user_id):
     key_name = R_PREFIX_PRIMARY + R_PREFIX_TASK + task_name + R_PREFIX_EMAIL_USERS
     res = BotWoody.r.sadd(key_name, user_id)
@@ -57,4 +56,5 @@ def db_task_get_emails(task_name):
     for i in range(res.count(None)):
         res.remove(None)
     res = [bytes.decode(x if x is not None else b'0') for x in res]
+    res.remove('-')
     return res
