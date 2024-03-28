@@ -37,10 +37,13 @@ dp = Dispatcher()
 @aiocron.crontab('*/10 * * * *')
 async def check_stores():
     # print('checking...')
+    operators = DbRedis.get_users_by_role(['operator'])
+    users = DbRedis.get_users_by_role(['user'])
     for store in BotWoody.data_storages:
         emails = DbRedis.db_task_get_emails(task_name=store.name)
-        # print(emails)
         await BotWoody.data_store_check(store,
+                                        users_msg=users,
+                                        users_file=operators,
                                         users_email=emails)
 
 
