@@ -55,6 +55,8 @@ def db_task_get_emails(task_name):
                            DbRedis.R_USERS_EMAIL_KEY) for x in user_ids]
     for i in range(res.count(None)):
         res.remove(None)
-    res = [bytes.decode(x if x is not None else b'0') for x in res]
-    res.remove('-')
+    if len(res) > 0:
+        res = [bytes.decode(x if x is not None else b'0') for x in res]
+        # print(res)
+        # res.remove('-')
     return res
