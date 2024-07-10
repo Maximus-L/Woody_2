@@ -17,7 +17,7 @@ import Scaner.const as scan_const
 log: Lib.AppLogger = Lib.AppLogger(__name__,
                                    output='BOTH',
                                    log_file='./LOGS/bot.log',
-                                   log_level=Lib.ERROR)
+                                   log_level=Lib.INFO)
 
 
 async def data_store_check(store: Lib.DLStore,
@@ -45,6 +45,7 @@ async def data_store_check(store: Lib.DLStore,
                 message = f'!! New: {scan_const.DATA_SOURCE[store.name]["description"]} - {store.store_last_date}'
                 try:
                     await BotWoody.bot.send_message(user, message)
+                    log.info(f'({store.name}) Оповещен -> [{user}]')
                 except Exception as e:
                     log.error(f'ошибка пользователя {user}, {e}')
         if users_file:
@@ -53,6 +54,7 @@ async def data_store_check(store: Lib.DLStore,
                     f = FSInputFile(str(filepath), filename)
                     await BotWoody.bot.send_document(user, f,
                                                      request_timeout=const.FILE_REQUEST_TIMEOUT)
+                    log.info(f'Направлен файл {filename} -> [{user}]')
                 except Exception as e:
                     log.error(f'ошибка пользователя {user}, {e}')
         if users_email:
@@ -60,28 +62,7 @@ async def data_store_check(store: Lib.DLStore,
                               msg_subj=scan_const.DATA_SOURCE[store.name]["description"],
                               attachment_file=filepath,
                               filename=filename)
-    # if users_email:
-    #     filename = store.store_list[store.store_last_date]
-    #     filepath = os.path.join(store.store_p, filename)
-        # print(store.name, users_email)
-        # print(filename, filepath)
-        # send_email_attach(msg_to=elist,
-        #               msg_subj='send busy',
-        #               attachment_file='C:/My/DATA/RMSP/busy_2023-11-01.csv',
-        #               filename='busy_2023-11-01.csv')
-
-        # for user in users_email:
-        #     try:
-        #         with smtp.SMTP(host=const.EMAIL_HOST, port=const.EMAIL_PORT) as server:
-        #             server.starttls()
-        #             server.login(const.EMAIL_LOGIN, const.EMAIL_PASSWORD)
-        #             subject = scan_const.DATA_SOURCE[store.name]["description"]
-        #             text = 'Новые данные!!!'
-        #             server.sendmail(const.EMAIL_LOGIN,
-        #                             to_addrs=user,
-        #                             msg=f'Subject:{subject}\n{text}')
-        #     except Exception as e:
-        #         log.error(f'e-mail: {user} {e}')
+            log.info(f'Направлен e-mail: {filename} -> [{str(users_email)}]')
 
 
 def send_email_attach(msg_to, msg_subj, attachment_file, filename):

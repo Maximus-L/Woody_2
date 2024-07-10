@@ -28,6 +28,12 @@ def parse2csv(name,
         Parser.MSP.parse_xml_msp_2csv(xml_dir=url,
                                       csv_file=file_name,
                                       spr_regions=spr_regions)
+        # name = 'STAFF'
+        # file_name = os.path.join(const.DATA_SOURCE[name]['store_path'],
+        #                          const.DATA_SOURCE[name]['store_prefix']+'{:%Y-%m-%d}.csv'.format(date))
+        # Parser.MSP.parse_xml_staff_2csv(xml_dir=url,
+        #                                 csv_file=file_name)
+
     if name in ['DEBT_LOAN_MSP', 'DEBT_LOAN_IP']:
         file_name = os.path.join(csv_path, const.DATA_SOURCE[name]['store_prefix']+'{:%Y-%m-%d}.csv'.format(date))
         only_last_date = True

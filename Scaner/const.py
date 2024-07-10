@@ -29,6 +29,14 @@ DATA_SOURCE = {
         'description': 'МСП реестр',
         'cron': '31 */4 11-15 * *'
     },
+    'STAFF': {
+        'url': 'https://www.nalog.gov.ru/opendata/7707329152-rsmp/',
+        'store_path': os.environ.get('STAFF_STORE', default='C:/My/DATA/STAFF/CSV'),
+        'store_prefix': 'staff_',
+        'spr_file': './SPR/regions.xlsx',
+        'description': 'МСП персонал',
+        'cron': 'МСП реестр'
+    },
     'DEBT_LOAN_MSP': {
         'url': 'https://www.cbr.ru/vfs/statistics/BankSector/Loans_to_corporations/01_13_F_Debt_sme_subj.xlsx',
         'store_path': os.environ.get('DEBT_LOAN_MSP_STORE', default='C:/My/DATA/DEBT_LOAN/MSP'),
@@ -37,7 +45,7 @@ DATA_SOURCE = {
         'archive_date_re': '\d{,2}-\d{,2}-\d{4}',
         'archive_date_format': '%d.%m.%Y',
         'description': 'Задолж.кред.МСП',
-        'cron': '8 */3 7-20 * *',
+        'cron': '8 */3 7-26 * *',
         'values': [[56, 'МСП Итого '], [58, 'МСП в т.ч. просроч.']],
         'header': 1,
         'region_col': 'Unnamed: 0',
@@ -52,7 +60,26 @@ DATA_SOURCE = {
         'archive_date_re': '\d{,2}-\d{,2}-\d{4}',
         'archive_date_format': '%d.%m.%Y',
         'description': 'Задолж.кред.ИП',
-        'cron': '10 */3 7-20 * *',
+        'cron': '10 */3 7-26 * *',
+        'values': [[57, 'ИП итого'], [59, 'ИП в т.ч.просроч.']],
+        'header': 1,
+        'region_col': 'Unnamed: 0',
+        'region_id_col': 'Unnamed: 1',
+        'region_suffix': ' (по методологии)'
+    }
+
+}
+
+dsapi = {
+    'BUDGET': {
+        'url': 'http://budget.gov.ru/epbs/registry/7710568760-ASFKDOHKASSAMO/data',
+        'store_path': os.environ.get('BUDGET_STORE', default='C:/My/DATA/BUDGET'),
+        'store_prefix': 'budget_',
+        'spr_file': './SPR/spr_b.xlsx',
+        'archive_date_re': '\d{,2}-\d{,2}-\d{4}',
+        'archive_date_format': '%d.%m.%Y',
+        'description': 'Доходы бюджетов',
+        'cron': '10 */3 7-26 * *',
         'values': [[57, 'ИП итого'], [59, 'ИП в т.ч.просроч.']],
         'header': 1,
         'region_col': 'Unnamed: 0',

@@ -75,3 +75,21 @@ def parse_xml_msp_2csv(xml_dir=PATH_XML_TMP,
     log.info(f'Обработано {files_count} файлов за {t // 60:02d}:{t % 60:02d}')
     # сохранение результатов в CSV-файле либо в БД
     save_res_csv(q_res, csv_file)
+    while not q_res.empty():
+        a = q_res.get()
+
+
+def parse_xml_staff_2csv(xml_dir=PATH_XML_TMP,
+                         csv_file=os.path.join(PATH_XML_CSV, '1.csv')):
+    # инициализация параметров получаемых из командной строки
+    t0 = time.perf_counter()  # для подсчета времени выполнения
+    # заполнение очереди именами обрабатываемых XML-файлов
+    q_files_fill(xml_dir)
+    files_count = q_files.qsize()
+    Parser.MSP.load_xml_staff(q_files, q_res)
+    t1 = time.perf_counter()
+    t = int(t1 - t0)
+    # вывод времени обработки XML-файлов
+    log.info(f'Обработано {files_count} файлов за {t // 60:02d}:{t % 60:02d}')
+    # сохранение результатов в CSV-файле либо в БД
+    save_res_csv(q_res, csv_file)

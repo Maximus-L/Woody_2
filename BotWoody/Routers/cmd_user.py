@@ -36,6 +36,7 @@ async def cmd_get_answer(message: Message, state: FSMContext):
 @router.message(StateFilter(BotWoody.WoodyStates.state_cmd_user), Command(commands=['cancel']))
 @router.message(StateFilter(BotWoody.WoodyStates.state_cmd_user_add), Command(commands=['cancel']))
 @router.message(StateFilter(BotWoody.WoodyStates.state_cmd_user_list), Command(commands=['cancel']))
+@router.message(BotWoody.WoodyStates.state_cmd_user_list_choice_user, Command(commands=['cancel']))
 @router.message(BotWoody.WoodyStatesTask.state_wait_choice, Command(commands=['cancel']))
 @router.message(BotWoody.WoodyStatesTask.state_wait_user, Command(commands=['cancel']))
 @router.message(BotWoody.WoodyStatesTask.state_wait_user_for_add, Command(commands=['cancel']))
