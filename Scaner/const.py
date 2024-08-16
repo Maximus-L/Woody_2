@@ -13,7 +13,7 @@ DATA_SOURCE = {
         'url': 'https://rmsp.nalog.ru/',
         'store_path': os.environ.get('BUSY_STORE', default='C:/My/DATA/RMSP'),
         'store_prefix': 'busy_',
-        'spr_file': './SPR/spr_b.xlsx',
+        'spr_file': './SPR/spr_busy.xlsx',
         'description': 'МСП занятые',
         'cron': '5 */2 10-13 * *'
     },
@@ -41,7 +41,7 @@ DATA_SOURCE = {
         'url': 'https://www.cbr.ru/vfs/statistics/BankSector/Loans_to_corporations/01_13_F_Debt_sme_subj.xlsx',
         'store_path': os.environ.get('DEBT_LOAN_MSP_STORE', default='C:/My/DATA/DEBT_LOAN/MSP'),
         'store_prefix': 'debt_msp_',
-        'spr_file': './SPR/spr_b.xlsx',
+        'spr_file': './SPR/spr_debt.xlsx',
         'archive_date_re': '\d{,2}-\d{,2}-\d{4}',
         'archive_date_format': '%d.%m.%Y',
         'description': 'Задолж.кред.МСП',
@@ -51,12 +51,12 @@ DATA_SOURCE = {
         'region_col': 'Unnamed: 0',
         'region_id_col': 'Unnamed: 1',
         'region_suffix': ' (по методологии)'
-},
+    },
     'DEBT_LOAN_IP': {
         'url': 'https://www.cbr.ru/vfs/statistics/BankSector/Loans_to_corporations/01_13_I_Debt_sme_subj.xlsx',
         'store_path': os.environ.get('DEBT_LOAN_IP_STORE', default='C:/My/DATA/DEBT_LOAN/IP'),
         'store_prefix': 'debt_ip_',
-        'spr_file': './SPR/spr_b.xlsx',
+        'spr_file': './SPR/spr_debt.xlsx',
         'archive_date_re': '\d{,2}-\d{,2}-\d{4}',
         'archive_date_format': '%d.%m.%Y',
         'description': 'Задолж.кред.ИП',
@@ -66,9 +66,28 @@ DATA_SOURCE = {
         'region_col': 'Unnamed: 0',
         'region_id_col': 'Unnamed: 1',
         'region_suffix': ' (по методологии)'
+    },
+    'PROM': {
+        'url': 'https://rosstat.gov.ru/enterprise_industrial/',
+        'store_path': os.environ.get('PROM_STORE', default='C:/My/DATA/PROM'),
+        'store_prefix': 'prom_',
+        'archive_date_re': 'prom_\d{,2}-\d{4}',
+        'archive_date_format': 'prom_%m-%Y',
+        'description': 'Производство осн. видов продукции',
+        'cron': '15 * * * *',
+        'values': 'Н-П_29',
+        'header': 7,
+        'filter_col': 'Б',
+        'filter_begin': '29.10.2',
+        'filter_end': '29.10.21'
     }
 
 }
+
+
+
+
+
 
 dsapi = {
     'BUDGET': {

@@ -25,6 +25,10 @@ async def busy():
 async def debt_loan():
     await Scaner.check_debt_loan()
 
+@aiocron.crontab(Scaner.DATA_SOURCE['PROM']['cron'])
+async def prom():
+    await Scaner.check_prom()
+
 
 def main():
     pass

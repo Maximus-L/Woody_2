@@ -9,13 +9,14 @@ import Parser.Busy.busy_parser
 import Parser.MSP.xml2csv
 import Scaner.const as const
 import Parser.LoanDebt
-
+import Parser.Prom
 
 def parse2csv(name,
               url=None,
               spr_regions: Lib.Spr = None,
               date: datetime.date = None,
-              csv_path=None) -> pd.DataFrame() | None:
+              csv_path=None,
+              last_url=None) -> pd.DataFrame() | None:
     file_name = None
     if name == 'BUSY':
         if url is not None and spr_regions is not None:
@@ -38,6 +39,15 @@ def parse2csv(name,
         file_name = os.path.join(csv_path, const.DATA_SOURCE[name]['store_prefix']+'{:%Y-%m-%d}.csv'.format(date))
         only_last_date = True
         res_df = Parser.LoanDebt.loan_debt_data(url, name, only_last_date=only_last_date)
+        if res_df is not None:
+            res_df.to_csv(file_name, sep=';', mode='w', index=False, header=True)
+        else:
+            file_name = None
+
+    if name == 'PROM':
+        file_name = os.path.join(csv_path, 'prom_{:%Y-%m-%d}.csv'.format(date))
+        if last_url is not None:
+            res_df = Parser.Prom.prom_data(last_url)
         if res_df is not None:
             res_df.to_csv(file_name, sep=';', mode='w', index=False, header=True)
         else:
