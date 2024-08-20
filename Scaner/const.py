@@ -74,7 +74,7 @@ DATA_SOURCE = {
         'archive_date_re': 'prom_\d{,2}-\d{4}',
         'archive_date_format': 'prom_%m-%Y',
         'description': 'Производство осн. видов продукции',
-        'cron': '15 * * * *',
+        'cron': '55 */12 20-31 * *',
         'values': 'Н-П_29',
         'header': 7,
         'filter_col': 'Б',

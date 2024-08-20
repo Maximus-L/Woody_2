@@ -39,11 +39,14 @@ async def check_stores():
     # print('checking...')
     operators = DbRedis.get_users_by_role(['operator'])
     users = DbRedis.get_users_by_role(['user'])
+
     for store in BotWoody.data_storages:
         emails = DbRedis.db_task_get_emails(task_name=store.name)
+        usr_msg = DbRedis.db_task_get_users_msg(task_name=store.name)
+        usr_file = DbRedis.db_task_get_users_file(task_name=store.name)
         await BotWoody.data_store_check(store,
-                                        users_msg=users,
-                                        users_file=operators,
+                                        users_msg=usr_msg,
+                                        users_file=usr_file,
                                         users_email=emails)
 
 
