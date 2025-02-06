@@ -15,7 +15,7 @@ DATA_SOURCE = {
         'store_prefix': 'busy_',
         'spr_file': './SPR/spr_busy.xlsx',
         'description': 'МСП занятые',
-        'cron': '5 */2 10-13 * *'
+        'cron': '5 */2 10-17 * *'
     },
     'MSP': {
         'url': 'https://www.nalog.gov.ru/opendata/7707329152-rsmp/',
@@ -27,7 +27,7 @@ DATA_SOURCE = {
         'archive_date_format': 'data-%d%m%Y',
         'temp_path': os.environ.get('MSP_STORE_TMP', default='C:/My/DATA/XML/TMP'),
         'description': 'МСП реестр',
-        'cron': '31 */4 11-15 * *'
+        'cron': '31 */4 11-17 * *'
     },
     'STAFF': {
         'url': 'https://www.nalog.gov.ru/opendata/7707329152-rsmp/',
@@ -45,7 +45,7 @@ DATA_SOURCE = {
         'archive_date_re': '\d{,2}-\d{,2}-\d{4}',
         'archive_date_format': '%d.%m.%Y',
         'description': 'Задолж.кред.МСП',
-        'cron': '8 */3 7-26 * *',
+        'cron': '7 */6 1-30 * *',
         'values': [[56, 'МСП Итого '], [58, 'МСП в т.ч. просроч.']],
         'header': 1,
         'region_col': 'Unnamed: 0',
@@ -60,7 +60,7 @@ DATA_SOURCE = {
         'archive_date_re': '\d{,2}-\d{,2}-\d{4}',
         'archive_date_format': '%d.%m.%Y',
         'description': 'Задолж.кред.ИП',
-        'cron': '10 */3 7-26 * *',
+        'cron': '11 */6 1-30 * *',
         'values': [[57, 'ИП итого'], [59, 'ИП в т.ч.просроч.']],
         'header': 1,
         'region_col': 'Unnamed: 0',
@@ -71,12 +71,12 @@ DATA_SOURCE = {
         'url': 'https://rosstat.gov.ru/enterprise_industrial/',
         'store_path': os.environ.get('PROM_STORE', default='C:/My/DATA/PROM'),
         'store_prefix': 'prom_',
-        'archive_date_re': 'prom_\d{,2}-\d{4}',
-        'archive_date_format': 'prom_%m-%Y',
+        'archive_date_re': '[P|p]rom_\d{,2}[_|-]\d{4}',
+        'archive_date_format': '%m-%Y-%d',
         'description': 'Производство осн. видов продукции',
-        'cron': '55 */12 20-31 * *',
+        'cron': '45 */4 1-10,20-31 * *',
         'values': 'Н-П_29',
-        'header': 7,
+        'header': 6,
         'filter_col': 'Б',
         'filter_begin': '29.10.2',
         'filter_end': '29.10.21'
@@ -107,3 +107,5 @@ dsapi = {
     }
 
 }
+
+url_budget = "https://budget.gov.ru/epbs/registry/7710568760-ASFKDOHKASSAMO/data?filtermeanstypecode=1&filter_equal_asfkbudgetlevels=16&filtercode=105;101;103;106;107;108;109;111;112;113;114;115;116;117"

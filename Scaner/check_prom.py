@@ -20,6 +20,8 @@ async def check_prom():
                         )
         url_date = f.get_last_date_url()
         log.info(f'{name}: Проверка: {url_date}')
+        print(name, f.store_last_date, url_date)
+
         if f.store_last_date is None or url_date > f.store_last_date:
             print('Download ...')
             fname = f.download_to_csv(url_date)

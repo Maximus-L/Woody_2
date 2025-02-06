@@ -1,4 +1,4 @@
-rem Запуск сканера страниц
+rem ‡ ЇгбЄ бЄ ­Ґа  бва ­Ёж
 rem 
 rem
 call ".\.venv\scripts\activate.bat"

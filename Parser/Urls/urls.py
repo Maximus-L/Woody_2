@@ -8,7 +8,7 @@ from bs4 import BeautifulSoup
 import Lib
 
 CHUNK_SIZE = 2048
-DEFAULT_PATH = './TEMP'
+DEFAULT_PATH = './TMP'
 log: Lib.AppLogger = Lib.AppLogger(__name__, 'BOTH',
                                    log_file='./LOGS/scaner.log',
                                    log_level=Lib.ERROR)
@@ -28,7 +28,7 @@ def url_is_valid(url) -> bool:
     return bool(parsed.netloc) and bool(parsed.scheme)
 
 
-def url_download_file(url, destination_path=DEFAULT_PATH) -> str | None:
+def url_download_file(url, destination_path=DEFAULT_PATH, verify=True) -> str | None:
     """
     :param destination_path:
     :param url: ссылка на файл для скачивания
@@ -36,7 +36,7 @@ def url_download_file(url, destination_path=DEFAULT_PATH) -> str | None:
     :return: Имя загруженного файла | None - если не скачан
     """
     try:
-        res = requests.get(url)
+        res = requests.get(url, verify=verify)
     except Exception as e:
         raise InvalidUrlFile(f'Файл:{url} невозможно загрузить ({e})')
     dest_file = os.path.join(os.path.abspath(destination_path),

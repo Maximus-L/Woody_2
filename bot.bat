@@ -1,4 +1,4 @@
-rem ╟ряєёъ сюЄр
+rem Запуск бота
 rem 
 rem
 call ".\.venv\scripts\activate.bat"

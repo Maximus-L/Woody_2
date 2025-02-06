@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import os.path
 import re
 import datetime as dt
 
@@ -28,8 +28,8 @@ class InvalidUrl(Exception):
 
 
 def prom_last_date(url,
-                  fdate_re='prom_\d{2}-\d{4}',
-                  fdate_format='prom_%m-%Y'):
+                  fdate_re='[P|p]rom_\d{,2}[_|-]\d{4}',
+                  fdate_format='%m-%Y-%d'):
     """
     :param url: ссылка для поиска файлов
     :param fdate_re: маска для поиска файлов
@@ -40,7 +40,7 @@ def prom_last_date(url,
     if not Parser.Urls.url_is_valid(url):
         raise InvalidUrl(url)
     try:
-        soup = BeautifulSoup(requests.get(url).content, "html.parser")
+        soup = BeautifulSoup(requests.get(url, verify=False).content, "html.parser")
     except Exception:
         return None
     url_server = url[:re.search('.ru', url).regs[0][1]]
@@ -56,7 +56,8 @@ def prom_last_date(url,
                 try:
                     # извлечение даты, проверка на "свежесть"
                     # print(data.group(0), file_ref)
-                    date = dt.datetime.strptime(data.group(0)+'-01', fdate_format+'-%d')
+                    sdate = data.group(0).replace('_', '-')+'-01'
+                    date = dt.datetime.strptime(sdate[-10:], fdate_format)
                     date = dt.date(date.year, date.month, 1)
                     # print(date)
                     if max_date is None or date > max_date:
@@ -69,7 +70,10 @@ def prom_last_date(url,
 
 def prom_data(url: str) -> pd.DataFrame | None:
     name = 'PROM'
-    x = pd.read_excel(url,
+    fname = Parser.Urls.url_download_file(url,
+                                          os.path.join( const.DATA_SOURCE[name]['store_path'], 'TMP'),
+                                          verify=False)
+    x = pd.read_excel(fname,
                       sheet_name=const.DATA_SOURCE[name]['values'],
                       header=const.DATA_SOURCE[name]['header'],
                       engine='openpyxl')
