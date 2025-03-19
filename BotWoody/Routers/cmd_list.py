@@ -8,6 +8,7 @@ from aiogram.fsm.context import FSMContext
 import BotWoody
 import Scaner
 import BotWoody.const as const
+import BotWoody.Filt as Filt
 
 router = Router()
 
@@ -18,6 +19,8 @@ router = Router()
                 F.from_user.id.in_(const.BOT_USERS))
 @router.message(Command(commands=['list']),
                 F.from_user.id.in_(const.BOT_OPERATORS))
+@router.message(Command(commands=['list']),
+                Filt.UsersByRole(['admin', 'user', 'operator']))
 async def cmd_list_answer(message: Message, state: FSMContext):
     keys = []
     for name in Scaner.DATA_SOURCE.keys():

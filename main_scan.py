@@ -25,6 +25,10 @@ async def busy():
 async def debt_loan():
     await Scaner.check_debt_loan()
 
+@aiocron.crontab(Scaner.DATA_SOURCE['PROM']['cron'])
+async def prom():
+    await Scaner.check_prom()
+
 
 def main():
     pass
@@ -34,5 +38,11 @@ def main():
 
 
 if __name__ == '__main__':
-    # asyncio.get_event_loop().run_forever()
-    main()
+    print('                                  ____')
+    print(' __      __                      /_^  \\')
+    print(' \\ \\ /\\ / /___  ___  __/\\__ __   ` /  /')
+    print('  \\ V  V // _ \\/ _ \\/ _ `\\ V /    /  /__')
+    print('   \\_/\\_/ \\___/\\___/\\_^_/ \\ /    /_____/  ')
+    print('                         /_/')
+    asyncio.get_event_loop().run_forever()
+    # main()

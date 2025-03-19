@@ -16,7 +16,7 @@ DEFAULT_SPR_FILE_NAME = "./SPR/spr_b.xlsx"
 
 log: Lib.AppLogger = Lib.AppLogger(__name__,
                                    output='BOTH',
-                                   log_file='./LOGS/scan_spr.log',
+                                   log_file=os.path.abspath('./LOGS/scan_spr.log'),
                                    log_level=Lib.ERROR)
 
 

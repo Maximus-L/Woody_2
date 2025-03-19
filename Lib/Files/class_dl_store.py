@@ -93,6 +93,13 @@ class DLStore(object):
         self.__url_last_date, self.__url_last_url = Parser.url_data_last_date(self.name, self.url)
         return self.__url_last_date
 
+    def get_last_file_url(self) -> dt.date | None:
+        """
+        :return: возвращает дату самых "свежих" данных на странице self.url
+        """
+        self.__url_last_date, self.__url_last_url = Parser.url_data_last_date(self.name, self.url)
+        return self.__url_last_url
+
     def download_to_arc(self):
         """
         Метод загружает zip файл в хранилище
@@ -113,7 +120,8 @@ class DLStore(object):
                                     url=self.url if self.__temp_path is None else self.__temp_path,
                                     spr_regions=self.__spr,
                                     date=self.__url_last_date if date is None else date,
-                                    csv_path=self.__store.store_path)
+                                    csv_path=self.__store.store_path,
+                                    last_url=self.__url_last_url)
         self.__store.refresh()
         res_zip_path = os.path.join(self.__store.store_path, 'zip')
         if os.path.isdir(res_zip_path):

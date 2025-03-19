@@ -1,0 +1,6 @@
+# Запуск сканера
+# 
+#
+source ~/PyProjects/Woody_2/.venv/bin/activate
+python3.12 ~/PyProjects/Woody_2/main_scan.py
+deactivate

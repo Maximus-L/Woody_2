@@ -109,13 +109,16 @@ def load_xml_multiproc(q_files: multiprocessing.JoinableQueue,
                     if 'ИПВклМСП' in [a.tag for a in onne_doc_child]:
                         inn = int(one_doc.ИПВклМСП.get('ИННФЛ'))
                         opf = OPF_IP
+                        staff = None
                     elif 'ОргВклМСП' in [a.tag for a in onne_doc_child]:
                         inn = int(one_doc.ОргВклМСП.get('ИННЮЛ'))
                         opf = OPF_UL
+                        staff = one_doc.get('ССЧР')
                     else:
                         inn = None
                         ogrn = None
                         opf = None
+                        staff = None
                     okved = '00.00'
                     try:
                         okved = one_doc.СвОКВЭД.СвОКВЭДОсн.get('КодОКВЭД')

@@ -11,7 +11,7 @@ import Lib
 log: Lib.AppLogger = Lib.AppLogger('Class FileStore',
                                    output='BOTH',
                                    log_file='./LOGS/scaner.log',
-                                   log_level=Lib.DEBUG)
+                                   log_level=Lib.ERROR)
 
 
 class InvalidFilePath(Exception):
