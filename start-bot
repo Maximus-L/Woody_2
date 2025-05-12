@@ -1,6 +1,6 @@
 # Запуск бота
 # 
 #
-bash ~/PyProjects/Woody_2/.venv/bin/activate
+source ~/PyProjects/Woody_2/.venv/bin/activate
 python ~/PyProjects/Woody_2/main.py
 deactivate

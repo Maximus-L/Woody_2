@@ -44,5 +44,9 @@ if __name__ == '__main__':
     print('  \\ V  V // _ \\/ _ \\/ _ `\\ V /    /  /__')
     print('   \\_/\\_/ \\___/\\___/\\_^_/ \\ /    /_____/  ')
     print('                         /_/')
+    print('=======================SCANER===========================')
+    print(' Сканируемые задачи:')
+    for src in Scaner.DATA_SOURCE.keys():
+        print(src, Scaner.DATA_SOURCE[src]['cron'])
     asyncio.get_event_loop().run_forever()
     # main()

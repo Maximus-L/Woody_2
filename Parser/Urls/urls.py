@@ -28,15 +28,22 @@ def url_is_valid(url) -> bool:
     return bool(parsed.netloc) and bool(parsed.scheme)
 
 
-def url_download_file(url, destination_path=DEFAULT_PATH, verify=True) -> str | None:
+def url_download_file(url, destination_path=DEFAULT_PATH, verify=True, qparams = None) -> str | None:
     """
-    :param destination_path:
     :param url: ссылка на файл для скачивания
     :param destination_path: путь куда скачивать
+    :param verify: проверка SSL сертификата или путь к сертификатам
+    :param qparams: словарь с параметрами запроса
     :return: Имя загруженного файла | None - если не скачан
     """
     try:
-        res = requests.get(url, verify=verify)
+        with requests.Session() as s:
+            s.verify = verify
+            if qparams:
+                res = s.get(url, params=qparams)
+                res = s.get(url, params=qparams)
+            else:
+                res = s.get(url)
     except Exception as e:
         raise InvalidUrlFile(f'Файл:{url} невозможно загрузить ({e})')
     dest_file = os.path.join(os.path.abspath(destination_path),

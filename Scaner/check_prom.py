@@ -3,12 +3,13 @@
 import Lib
 import Scaner
 
+
 log: Lib.AppLogger = Lib.AppLogger(__name__,
                                    output='BOTH',
                                    log_file='./LOGS/scaner.log',
                                    log_level=Lib.INFO)
 
-
+#async
 async def check_prom():
     name = 'PROM'
     try:

@@ -2,6 +2,7 @@
 import os.path
 import re
 import datetime as dt
+from time import sleep
 
 import requests
 from bs4 import BeautifulSoup
@@ -13,6 +14,10 @@ import pandas as pd
 import Parser.XLS
 import Scaner.const as const
 import Lib.Spr
+
+# CERT_MINC = '/usr/local/share/ca-certificates/russian-trusted/minc.crt'
+# CERT_MINC = './SPR/minc.crt'
+CERT_MINC = const.DATA_SOURCE['PROM']['ssl-cert']
 
 
 log: Lib.AppLogger = Lib.AppLogger(__name__,
@@ -39,18 +44,33 @@ def prom_last_date(url,
     """
     if not Parser.Urls.url_is_valid(url):
         raise InvalidUrl(url)
+
     try:
-        soup = BeautifulSoup(requests.get(url, verify=False).content, "html.parser")
+        print(url)
+        with requests.Session() as s:
+            s.verify = CERT_MINC
+            try_count = 1
+            while try_count<10:
+                r = s.get(url, timeout=5)
+                r = s.get(url, timeout=5)
+                if r.status_code == 200: break
+                try_count += 1
+            if r.status_code != 200:
+                raise InvalidUrl(url)
+            soup = BeautifulSoup(r.content, 'html.parser')
     except Exception:
         return None
     url_server = url[:re.search('.ru', url).regs[0][1]]
     max_date = None  # максимальная дата файла
     url_for_load = None  # ссылка на файл
     # перебор всех ссылок
-    for link in soup.findAll("a"):
+    links = soup.find_all('a')
+    for link in links:   #soup.findAll("a"):
+        # print(link.get('href'))
         file_ref = link.get('href')
         if file_ref is not None:
             # проверка наличия даты в имени файла (ссылки)
+            # print(file_ref)
             data = re.search(fdate_re, file_ref)
             if data is not None:
                 try:
@@ -63,6 +83,7 @@ def prom_last_date(url,
                     if max_date is None or date > max_date:
                         max_date = date
                         url_for_load = url_server + file_ref.strip()
+                        print(url_for_load)
                 except Exception as e:
                     log.error(f'Дата не в формате. {e}')
     return list([max_date, url_for_load])
@@ -70,9 +91,11 @@ def prom_last_date(url,
 
 def prom_data(url: str) -> pd.DataFrame | None:
     name = 'PROM'
+    qparams = {"downloadformat": "xlsx"}
     fname = Parser.Urls.url_download_file(url,
                                           os.path.join( const.DATA_SOURCE[name]['store_path'], 'TMP'),
-                                          verify=False)
+                                          verify=CERT_MINC,
+                                          qparams=qparams)
     x = pd.read_excel(fname,
                       sheet_name=const.DATA_SOURCE[name]['values'],
                       header=const.DATA_SOURCE[name]['header'],

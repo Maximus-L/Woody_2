@@ -72,6 +72,13 @@ async def main():
 
 
 if __name__ == '__main__':
+    print('                                  ____')
+    print(' __      __                      /_^  \\')
+    print(' \\ \\ /\\ / /___  ___  __/\\__ __   ` /  /')
+    print('  \\ V  V // _ \\/ _ \\/ _ `\\ V /    /  /__')
+    print('   \\_/\\_/ \\___/\\___/\\_^_/ \\ /    /_____/  ')
+    print('                         /_/')
+    print('=======================BOT==============================')
     asyncio.get_event_loop().run_until_complete(main())
     asyncio.get_event_loop().run_forever()
 
